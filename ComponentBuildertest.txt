@@ -1,0 +1,220 @@
+/* global describe, beforeEach, it, expect */
+import ComponentBuilder from './index.js'
+import Checkbox from '@healthwise/checkbox'
+/* global DOMParser */
+
+let componentBuilder
+const getBasicHtml = (children = '<section>content</section>', title = 'Title') => {
+  return `<html><head><title>${title}</title></head><body>${children}</body></html>`
+}
+class Paragraph {
+  render() {
+    return <p>{this.props.children}</p>
+  }
+}
+class UnorderedList {
+  render() {
+    return <ul>{this.props.children}</ul>
+  }
+}
+class ListItem {
+  render() {
+    return <li>{this.props.children}</li>
+  }
+}
+class Question {
+  render() {
+    return <span data-required={this.props.isRequired}>{this.props.children}</span>
+  }
+}
+beforeEach(() => {
+  const componentMap = [
+    {
+      when: node => {
+        return node && (node.tagName || '').toLowerCase() === 'p'
+      },
+      use: Paragraph,
+    },
+    {
+      when: node => {
+        return node && (node.tagName || '').toLowerCase() === 'ul'
+      },
+      use: UnorderedList,
+    },
+    {
+      when: node => {
+        return node && (node.tagName || '').toLowerCase() === 'li'
+      },
+      use: ListItem,
+    },
+    {
+      when: node => {
+        return node && (node.tagName || '').toLowerCase() === 'h3'
+      },
+      ignore: true,
+    },
+    {
+      when: node => {
+        return node && (node.tagName || '').toLowerCase() === 'question'
+      },
+      use: Question,
+      withProps: {
+        isRequired: true,
+      },
+    },
+    {
+      when: node => {
+        return (
+          node &&
+          (node.tagName || '').toLowerCase() === 'input' &&
+          node.attributes &&
+          node.attributes.hasOwnProperty('type') &&
+          node.attributes['type'].nodeValue === 'checkbox'
+        )
+      },
+      use: Checkbox,
+      withProps: {
+        type: 'checkbox',
+        name: 'swan',
+        value: 'okay',
+      },
+    },
+  ]
+  componentBuilder = new ComponentBuilder(componentMap)
+})
+describe('ComponentBuilder', () => {
+  it('Creates react components even without a map passed in', () => {
+    const bareComponentBuilder = new ComponentBuilder()
+    var component = bareComponentBuilder.build(
+      getBasicHtml("<section><h3>I am bare and lovin' it!</h3></section>")
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('Creates section from html string', () => {
+    var component = componentBuilder.build(getBasicHtml('<section>Steve Was Here</section>'))
+    expect(component).toMatchSnapshot()
+  })
+  it('renders table properly - even with whitespace', () => {
+    var component = componentBuilder.build(
+      getBasicHtml(`<section>
+        <table>
+          <caption>UI Developers</caption>
+          <tr><th scope="col">Name</th><th scope="col">Attribute</th></tr>
+          <tr><td>Sean</td><td>Okay</td></tr>
+          <tr><td>Nate</td><td>Not bad</td></tr>
+          <tr><td>Steve</td><td>Meh</td></tr>
+          <tr><td>Erik</td><td>Pure evil</td></tr>
+        </table>
+      </section>`)
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('Creates ignores ignored component', () => {
+    var component = componentBuilder.build(
+      getBasicHtml('<section><h3>Steve Was Here</h3></section>')
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('Passes through unknown component', () => {
+    var component = componentBuilder.build(getBasicHtml('<section><b>Steve Was Here</b></section>'))
+    expect(component).toMatchSnapshot()
+  })
+  it('Uses known component', () => {
+    var component = componentBuilder.build(getBasicHtml('<section><p>Steve Was Here</p></section>'))
+    expect(component).toMatchSnapshot()
+  })
+  it('properly nests known components', () => {
+    var component = componentBuilder.build(
+      getBasicHtml('<section><ul><li>Steve Was Here</li></ul></section>')
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('removes line breaks', () => {
+    var component = componentBuilder.build(
+      getBasicHtml(
+        '<section><h2>Think about women who had a C-section \r\n\r\nin the past and then try to have another baby vaginally. About how many of those women will have a scar\r\nfrom a past C-section break open during labor?\n\n\n</h2></section>'
+      )
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('removes extra spaces', () => {
+    var component = componentBuilder.build(
+      getBasicHtml(`<section>
+      <h2>Think about women who had a C-section in the past and then try to 
+      have another baby vaginally. About how many of those women will have a scar from a past                             C-section 
+      break open during labor?</h2>    </section>`)
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('leaves necessary spaces', () => {
+    var component = componentBuilder.build(
+      `<span>About how many women who try to have a vaginal birth after having a (space here--) <em>C-section</em> (--space here) will end up needing another C-section?</span>`
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('properly handles self-closing tags', () => {
+    var component = componentBuilder.build(
+      getBasicHtml('<section><img src="steve_was_here.png" alt="Steve was here" /></section>')
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('properly handles class attribute', () => {
+    var component = componentBuilder.build(
+      getBasicHtml(
+        '<section role="main"><a href="http://radpix.ninja" class="important">Rad Pix</a></section>'
+      )
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('properly handles for attribute', () => {
+    var component = componentBuilder.build(
+      getBasicHtml(
+        '<section><label for="steve_was_here">Steve was here</label><input type="checkbox" id="steve_was_here" /></section>'
+      )
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('properly handles aria-elements', () => {
+    var component = componentBuilder.build(
+      getBasicHtml(
+        `<section role="main">
+      <fieldset>
+        <legend id="question">Was Steve here?</legend>
+        <ul role="radiogroup" aria-labelledby="question">
+          <li role="radio"><a href="http://radpix.ninja/yes">Yes</a></li>
+          <li role="radio"><a href="http://radpix.ninja/no">No</a></li>
+        </ul>
+      </fieldset>
+    </section>`
+      )
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('handles non-standard elements', () => {
+    var component = componentBuilder.build(
+      getBasicHtml(
+        `<section>
+      <question>What day is it?!</question>
+    </section>`
+      )
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('handles mapping using attribute values', () => {
+    var component = componentBuilder.build(
+      getBasicHtml(
+        `<section>
+      <label>
+        <input type="checkbox" id="steve_was_here" name="steve" />
+        Steve was here
+      </label>
+    </section>`
+      )
+    )
+    expect(component).toMatchSnapshot()
+  })
+  it('handles bare html', () => {
+    var component = componentBuilder.build('<p>This should probably work</p>')
+    expect(component).toMatchSnapshot()
+  })
+})
