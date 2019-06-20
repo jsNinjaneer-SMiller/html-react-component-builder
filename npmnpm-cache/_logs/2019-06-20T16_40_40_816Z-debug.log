@@ -1,0 +1,89 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'publish' ]
+2 info using npm@6.4.1
+3 info using node@v8.15.1
+4 verbose npm-session cba801fb52721243
+5 verbose publish [ '.' ]
+6 info lifecycle html-react-component-builder@1.0.0~prepublish: html-react-component-builder@1.0.0
+7 info lifecycle html-react-component-builder@1.0.0~prepare: html-react-component-builder@1.0.0
+8 info lifecycle html-react-component-builder@1.0.0~prepublishOnly: html-react-component-builder@1.0.0
+9 info lifecycle html-react-component-builder@1.0.0~prepack: html-react-component-builder@1.0.0
+10 info lifecycle html-react-component-builder@1.0.0~postpack: html-react-component-builder@1.0.0
+11 notice
+12 notice package: html-react-component-builder@1.0.0
+13 notice === Tarball Contents ===
+14 notice 538B  package.json
+14 notice 7.3kB ComponentBuildertest.txt
+14 notice 3.1kB index.js
+14 notice 1.1kB LICENSE
+14 notice 118B  README.md
+14 notice 4.9kB npm/_logs/2019-06-20T16_39_53_678Z-debug.log
+14 notice 4.7kB npmCache/_logs/2019-06-20T16_37_04_178Z-debug.log
+14 notice 2.2kB npmCache/_logs/2019-06-20T16_37_47_843Z-debug.log
+14 notice 4.8kB npmCache/_logs/2019-06-20T16_38_18_143Z-debug.log
+14 notice 4.5kB tempnpm-cache/_logs/2019-06-20T16_34_28_614Z-debug.log
+14 notice 4.6kB tempnpm/_logs/2019-06-20T16_36_23_572Z-debug.log
+14 notice 4.5kB tempnpmnpm-cache/_logs/2019-06-20T16_35_49_960Z-debug.log
+15 notice === Tarball Details ===
+16 notice name:          html-react-component-builder
+16 notice version:       1.0.0
+16 notice package size:  6.9 kB
+16 notice unpacked size: 42.3 kB
+16 notice shasum:        929b4f1506c764ed8e6ee2662c4ab12bede0dd64
+16 notice integrity:     sha512-9GcJ9cYf7+iq+[...]AohzQoyBtwpHw==
+16 notice total files:   12
+17 notice
+18 verbose getPublishConfig undefined
+19 silly mapToRegistry name html-react-component-builder
+20 silly mapToRegistry using default registry
+21 silly mapToRegistry registry https://registry.npmjs.org/
+22 silly mapToRegistry data { type: 'tag',
+22 silly mapToRegistry   registry: true,
+22 silly mapToRegistry   where: undefined,
+22 silly mapToRegistry   raw: 'html-react-component-builder',
+22 silly mapToRegistry   name: 'html-react-component-builder',
+22 silly mapToRegistry   escapedName: 'html-react-component-builder',
+22 silly mapToRegistry   scope: undefined,
+22 silly mapToRegistry   rawSpec: '',
+22 silly mapToRegistry   saveSpec: null,
+22 silly mapToRegistry   fetchSpec: 'latest',
+22 silly mapToRegistry   gitRange: undefined,
+22 silly mapToRegistry   gitCommittish: undefined,
+22 silly mapToRegistry   hosted: undefined }
+23 silly mapToRegistry uri https://registry.npmjs.org/html-react-component-builder
+24 verbose publish registryBase https://registry.npmjs.org/
+25 silly publish uploading D:\temp\npm-14212-dc866e92\tmp\fromDir-4d705b52\package.tgz
+26 verbose stack Error: EPERM: operation not permitted, unlink 'D:\temp\npm-14212-dc866e92\tmp\fromDir-4d705b52\package.tgz'
+27 verbose cwd D:\git_repos\html-react-component-builder
+28 verbose Windows_NT 10.0.17763
+29 verbose argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "publish"
+30 verbose node v8.15.1
+31 verbose npm  v6.4.1
+32 error path D:\temp\npm-14212-dc866e92\tmp\fromDir-4d705b52\package.tgz
+33 error code EPERM
+34 error errno -4048
+35 error syscall unlink
+36 error Error: EPERM: operation not permitted, unlink 'D:\temp\npm-14212-dc866e92\tmp\fromDir-4d705b52\package.tgz'
+36 error  { Error: EPERM: operation not permitted, unlink 'D:\temp\npm-14212-dc866e92\tmp\fromDir-4d705b52\package.tgz'
+36 error   cause:
+36 error    { Error: EPERM: operation not permitted, unlink 'D:\temp\npm-14212-dc866e92\tmp\fromDir-4d705b52\package.tgz'
+36 error      errno: -4048,
+36 error      code: 'EPERM',
+36 error      syscall: 'unlink',
+36 error      path: 'D:\\temp\\npm-14212-dc866e92\\tmp\\fromDir-4d705b52\\package.tgz' },
+36 error   isOperational: true,
+36 error   stack: 'Error: EPERM: operation not permitted, unlink \'D:\\temp\\npm-14212-dc866e92\\tmp\\fromDir-4d705b52\\package.tgz\'',
+36 error   errno: -4048,
+36 error   code: 'EPERM',
+36 error   syscall: 'unlink',
+36 error   path: 'D:\\temp\\npm-14212-dc866e92\\tmp\\fromDir-4d705b52\\package.tgz' }
+37 error The operation was rejected by your operating system.
+37 error It's possible that the file was already in use (by a text editor or antivirus),
+37 error or that you lack permissions to access it.
+37 error
+37 error If you believe this might be a permissions issue, please double-check the
+37 error permissions of the file and its containing directories, or try running
+37 error the command again as root/Administrator (though this is not recommended).
+38 verbose exit [ -4048, true ]
