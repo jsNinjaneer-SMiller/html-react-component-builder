@@ -1,0 +1,22 @@
+{
+  "name": "html-react-component-builder",
+  "version": "1.0.0",
+  "description": "Converts an HTML string to defined React components for a given series of instructions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://git-remote-url"
+  },
+  "keywords": [
+    "React",
+    "HTML",
+    "convert",
+    "component",
+    "builder"
+  ],
+  "author": "Steven Miller",
+  "license": "MIT"
+}
