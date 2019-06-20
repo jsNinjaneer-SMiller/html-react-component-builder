@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://git-remote-url"
+    "url": "git://github.com/jsNinjaneer/html-react-component-builder.git"
   },
   "keywords": [
     "React",
