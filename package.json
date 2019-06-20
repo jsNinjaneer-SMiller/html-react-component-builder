@@ -1,6 +1,6 @@
 {
   "name": "html-react-component-builder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Converts an HTML string to defined React components for a given series of instructions",
   "main": "index.js",
   "scripts": {
